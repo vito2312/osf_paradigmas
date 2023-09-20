@@ -2,34 +2,28 @@ import React, { useState, useCallback } from 'react';
 import { API_SERVER_URL } from './Url';
 import KeywordChecker from './KeywordChecker';
 import styles from '../styles/TextEditor.module.css'
-
+import { renderLineNumbers } from './TextUtils';
 
 const TextEditor = ({ keywordsList }) => {
   const [inputText, setInputText] = useState('');
   const [outputText, setOutputText] = useState('');
+  const [isSaved, setIsSaved] = useState(false);
 
-  //LIMPIAR LA PANTALLA
   const handleClear = () => {
     const confirmed = window.confirm('Are you sure you want to clear the text?');
     if (confirmed) {
       setInputText('');
       setOutputText('');
+      setIsSaved(false);
     }
   };
 
-
   const handleInputChange = (e) => {
     const newText = e.target.value;
-    const words = newText.split(/\s+/);
-
-    const processedWords = words
-      .map((word) => word.trim())
-      .filter((trimmedWord) => keywordsList.includes(trimmedWord));
-
-    const processedText = processedWords.join(' ');
 
     setInputText(newText);
-    setOutputText(processedText);
+    setOutputText(newText);
+    setIsSaved(false);
   };
 
   const handleSendToServer = useCallback(async () => {
@@ -48,6 +42,7 @@ const TextEditor = ({ keywordsList }) => {
 
       const data = await response.json();
       setOutputText(data.result);
+      setIsSaved(true);
     } catch (error) {
       console.error('Error sending data to server:', error);
     }
@@ -55,29 +50,24 @@ const TextEditor = ({ keywordsList }) => {
 
   return (
     <div>
-      <div className={styles.customContainer}>
-          <textarea
-          id={styles.TI}
-          className={`${styles.customTextarea}`}
-          value={inputText}
-          onChange={handleInputChange}
-          placeholder=""
-        />
-          <textarea 
-          id={styles.TO} 
-          className={`${styles.customTextarea}`} 
-          readOnly 
-          value={outputText}
-        />
-        <KeywordChecker text={inputText} />
+       <div className={styles.customContainer}>
+            <div className={styles.lineNumbers}>{renderLineNumbers(inputText)}</div>
+              <textarea id={styles.TI} className={`${styles.customTextarea}`} value={inputText} onChange={handleInputChange} placeholder=""/>
+              <div className={styles.lineNumbers}>{renderLineNumbers(inputText)}</div>
+              <textarea
+                id={styles.TO}
+                className={`${styles.customTextarea}`}
+                readOnly
+                value={outputText}
+              />
+          <KeywordChecker text={inputText} />
       </div>
-
-        <div className={styles.customButtons}>
-           <button className={styles.button} onClick={handleClear} >Clear All</button>
-           <button className={styles.buttonSend} onClick={handleSendToServer}>Send to Server</button>
-        </div>
+      <div className={styles.customButtons}>
+        <button className={styles.button} onClick={handleClear}>Clear All</button>
+        <button className={styles.buttonSend} onClick={handleSendToServer}>Send to Server</button>
+      </div>
     </div>
- 
+   
   );
 };
 

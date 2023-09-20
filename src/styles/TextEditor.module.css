@@ -9,6 +9,7 @@
 #TI{
   background-color: rgb(20, 20, 20);
   color: aliceblue;
+  margin-right: 4px;
 }
 #TO{
   background-color: grey;
@@ -25,7 +26,7 @@
   .customContainer{
     display: flex;
     margin: 5%;
-    gap: 5%;
+
   }
   
   .customButtons{
@@ -134,6 +135,25 @@
   }
   
 
+  .customTextareaContainer {
+    display: flex;
+    align-items: flex-start;
+  }
+
+
+  .lineNumbers {
+
+    background-color: #3b3939;
+    padding: 2px 10px;
+    text-align: right;
+    user-select: none;
+    font-size: 14px;
+    color: #e0d5d5;
+    line-height: 20px;
+    width: 30px;
+    height: 300px;
+    overflow-y: scroll;
+  }
 
   
 
