@@ -3,7 +3,6 @@ import TextEditor from "@/components/TextEditor";
 import { useEffect, useState } from "react";
 
 
-
 const fetchKeywords = async () => {
   try {
     const res = await fetch(`${API_SERVER_URL}/keywords`);
@@ -32,6 +31,7 @@ export default function Home() {
     <div className="Home">
       <h1>One Flow Stream</h1>
       <TextEditor keywordsList={keywordsList} />
+
     </div>
   );
 }
