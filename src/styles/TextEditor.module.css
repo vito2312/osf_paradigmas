@@ -32,7 +32,6 @@
     display: flex;
     margin: 5%;
     gap: 10px;
-    align-items: end;
     
   }
   .customButtons button{
