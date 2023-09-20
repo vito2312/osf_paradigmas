@@ -1,7 +1,6 @@
 import { API_SERVER_URL } from "@/components/Url";
 import TextEditor from "@/components/TextEditor";
 import { useEffect, useState } from "react";
-import Navbar from "@/components/Navbar";
 
 
 const fetchKeywords = async () => {
@@ -17,6 +16,9 @@ const fetchKeywords = async () => {
     return [];
   }S
 };
+
+
+
 
 export default function Home() {
   const [keywordsList, setKeywordsList] = useState([]);

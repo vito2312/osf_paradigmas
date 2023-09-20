@@ -1,6 +1,6 @@
 import React from "react";
 import ProductsPage from "../../components/Products"; // Cambia la importación a la ruta correcta
-import Navbar from "@/components/Navbar";
+
 const products = [
   {
     id: 1,

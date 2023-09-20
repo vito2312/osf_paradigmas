@@ -9,11 +9,11 @@ const links = [
   },
   {
     label: 'About',
-    route: '/AboutUs/page',
+    route: '/AboutUs',
   },
   {
     label: 'Nuestros Productos',
-    route: '/Products/page',
+    route: '/Products',
   },
 ];
 
@@ -34,5 +34,6 @@ const Navbar = () => {
     </header>
   );
 };
+
 
 export default Navbar;
