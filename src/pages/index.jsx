@@ -1,7 +1,7 @@
 import { API_SERVER_URL } from "@/components/Url";
 import TextEditor from "@/components/TextEditor";
 import { useEffect, useState } from "react";
-import About from '@/components/About';
+import styles from '../styles/global.module.css'
 
 const fetchKeywords = async () => {
   try {
@@ -19,7 +19,6 @@ const fetchKeywords = async () => {
 
 export default function Home() {
   const [keywordsList, setKeywordsList] = useState([]);
-  const [isAboutPopupOpen, setIsAboutPopupOpen] = useState(false);
 
   useEffect(() => {
     fetchKeywords()
@@ -27,23 +26,13 @@ export default function Home() {
       .catch(error => console.error('Error fetching keywords:', error));
   }, []);
 
-  const openAboutPopup = () => {
-    setIsAboutPopupOpen(true);
-  };
-
-  const closeAboutPopup = () => {
-    setIsAboutPopupOpen(false);
-  };
 
   return (
     <div className="Home">
-      <button onClick={openAboutPopup}>About</button>
       <h1>One Flow Stream</h1>
       <TextEditor keywordsList={keywordsList} />
 
-      {isAboutPopupOpen && <About />}
 
-      {isAboutPopupOpen && <button onClick={closeAboutPopup}>Cerrar About</button>}
     </div>
   );
 }
