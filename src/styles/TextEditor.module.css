@@ -1,7 +1,7 @@
 .customTextarea {
-    margin: 5px;
-    width: 300px;    /* Specify your desired width */
-    height: 200px;   /* Specify your desired height */
+
+    width: 800px;    /* Specify your desired width */
+    height: 300px;   /* Specify your desired height */
     overflow-y: auto; /* Enable vertical scrolling if content overflows */
     border-radius: 3%;
 }
@@ -23,21 +23,22 @@
   
 
   .customContainer{
-    margin-left: 20%; 
-    margin-top: 10%;  
+    display: flex;
+    margin: 5%;
+    gap: 5%;
   }
   
   .customButtons{
     display: flex;
-    margin-left: 1%; 
-    margin-top: 1%;  
+    margin: 5%;
     gap: 10px;
+    align-items: end;
     
   }
   .customButtons button{
     border-radius: 10rem;
     border: none;
-    height: 20px;
+    height: 40px;
     padding-inline: 20px;
   }
 
@@ -133,6 +134,7 @@
     width: 100%;
   }
   
+
 
   
 

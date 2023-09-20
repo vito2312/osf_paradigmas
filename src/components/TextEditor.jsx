@@ -8,6 +8,7 @@ const TextEditor = ({ keywordsList }) => {
   const [inputText, setInputText] = useState('');
   const [outputText, setOutputText] = useState('');
 
+  //LIMPIAR LA PANTALLA
   const handleClear = () => {
     const confirmed = window.confirm('Are you sure you want to clear the text?');
     if (confirmed) {
@@ -15,6 +16,7 @@ const TextEditor = ({ keywordsList }) => {
       setOutputText('');
     }
   };
+
 
   const handleInputChange = (e) => {
     const newText = e.target.value;
@@ -52,30 +54,33 @@ const TextEditor = ({ keywordsList }) => {
   }, [inputText]);
 
   return (
-    <div className={styles.customContainer}>
-      <textarea
-        id={styles.TI}
-        className={`${styles.customTextarea}`}
-        value={inputText}
-        onChange={handleInputChange}
-        placeholder=""
-      />
-      <textarea 
-      id={styles.TO} 
-      className={`${styles.customTextarea}`} 
-      readOnly 
-      value={outputText}
-       />
-      <KeywordChecker text={inputText} />
-
-      <div className={styles.customButtons}>
-        <button className={styles.button} onClick={handleClear} >Clear All</button>
-        <button className={styles.buttonSend} onClick={handleSendToServer}>Send to Server</button>
+    <div>
+      <div className={styles.customContainer}>
+          <textarea
+          id={styles.TI}
+          className={`${styles.customTextarea}`}
+          value={inputText}
+          onChange={handleInputChange}
+          placeholder=""
+        />
+          <textarea 
+          id={styles.TO} 
+          className={`${styles.customTextarea}`} 
+          readOnly 
+          value={outputText}
+        />
+        <KeywordChecker text={inputText} />
       </div>
-    </div>
 
-    
+        <div className={styles.customButtons}>
+           <button className={styles.button} onClick={handleClear} >Clear All</button>
+           <button className={styles.buttonSend} onClick={handleSendToServer}>Send to Server</button>
+        </div>
+    </div>
+ 
   );
 };
+
+
 
 export default TextEditor;

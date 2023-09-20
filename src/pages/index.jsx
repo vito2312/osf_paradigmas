@@ -17,6 +17,9 @@ const fetchKeywords = async () => {
   }S
 };
 
+
+
+
 export default function Home() {
   const [keywordsList, setKeywordsList] = useState([]);
 
@@ -26,12 +29,10 @@ export default function Home() {
       .catch(error => console.error('Error fetching keywords:', error));
   }, []);
 
-
   return (
     <div className="Home">
       <h1>One Flow Stream</h1>
       <TextEditor keywordsList={keywordsList} />
-
     </div>
   );
 }
