@@ -1,22 +1,38 @@
-import React from "react";
-import Link from "next/link";
+// Navbar.js
+import Link from 'next/link';
+import styles from '../styles/Navbar.module.css';
+
+const links = [
+  {
+    label: 'Home',
+    route: '/',
+  },
+  {
+    label: 'About',
+    route: '/AboutUs/page',
+  },
+  {
+    label: 'Nuestros Productos',
+    route: '/Products/page',
+  },
+];
+
 const Navbar = () => {
   return (
-    <div className="">
-      <div className="flex-none">
-        <ul className="menu menu-horizontal px-1">
-          <li>
-            <Link href="/">Home</Link>
-          </li>
-          <li>
-            <Link href="/Products/page">Nuestros Productos</Link>
-          </li>
-          <li>
-            <Link href="/AboutUs/page">About</Link>
-          </li>
+    <header className={styles.header}>
+      <nav>
+        <ul className={styles.navigation}>
+          {links.map(({ label, route }) => (
+            <li key={route} className={styles.navigationItem}>
+              <Link href={route}>
+                {label}
+              </Link>
+            </li>
+          ))}
         </ul>
-      </div>
-    </div>
+      </nav>
+    </header>
   );
 };
+
 export default Navbar;

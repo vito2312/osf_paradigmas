@@ -1,6 +1,7 @@
 import { API_SERVER_URL } from "@/components/Url";
 import TextEditor from "@/components/TextEditor";
 import { useEffect, useState } from "react";
+import Navbar from "@/components/Navbar";
 
 
 const fetchKeywords = async () => {
@@ -26,12 +27,10 @@ export default function Home() {
       .catch(error => console.error('Error fetching keywords:', error));
   }, []);
 
-
   return (
     <div className="Home">
       <h1>One Flow Stream</h1>
       <TextEditor keywordsList={keywordsList} />
-
     </div>
   );
 }
