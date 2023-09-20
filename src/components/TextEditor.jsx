@@ -2,10 +2,6 @@ import React, { useState, useCallback } from 'react';
 import { API_SERVER_URL } from './Url';
 import KeywordChecker from './KeywordChecker';
 
-
-
-
-
 const TextEditor = ({ keywordsList }) => {
   const [inputText, setInputText] = useState('');
   const [outputText, setOutputText] = useState('');
