@@ -1,6 +1,8 @@
 import React, { useState, useCallback } from 'react';
 import { API_SERVER_URL } from './Url';
 import KeywordChecker from './KeywordChecker';
+import styles from '../styles/TextEditor.module.css'
+
 
 const TextEditor = ({ keywordsList }) => {
   const [inputText, setInputText] = useState('');
@@ -50,21 +52,29 @@ const TextEditor = ({ keywordsList }) => {
   }, [inputText]);
 
   return (
-    <div className="custom-container">
+    <div className={styles.customContainer}>
       <textarea
-        id="TI"
-        className="custom-textarea"
+        id={styles.TI}
+        className={`${styles.customTextarea}`}
         value={inputText}
         onChange={handleInputChange}
         placeholder=""
       />
-      <textarea id="TO" className="custom-textarea bg-black text-white" readOnly value={outputText} />
-      <div className="custom-buttons">
-        <button onClick={handleClear}>Clear All</button>
-        <button onClick={handleSendToServer}>Send to Server</button>
-      </div>
+      <textarea 
+      id={styles.TO} 
+      className={`${styles.customTextarea}`} 
+      readOnly 
+      value={outputText}
+       />
       <KeywordChecker text={inputText} />
+
+      <div className={styles.customButtons}>
+        <button className={styles.button} onClick={handleClear} >Clear All</button>
+        <button className={styles.buttonSend} onClick={handleSendToServer}>Send to Server</button>
+      </div>
     </div>
+
+    
   );
 };
 
