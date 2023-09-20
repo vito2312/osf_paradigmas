@@ -1,7 +1,7 @@
 import { API_SERVER_URL } from "@/components/Url";
 import TextEditor from "@/components/TextEditor";
 import { useEffect, useState } from "react";
-import styles from '../styles/global.module.css'
+
 
 const fetchKeywords = async () => {
   try {
@@ -14,7 +14,7 @@ const fetchKeywords = async () => {
   } catch (error) {
     console.error('Error fetching keywords:', error);
     return [];
-  }
+  }S
 };
 
 export default function Home() {
@@ -31,7 +31,6 @@ export default function Home() {
     <div className="Home">
       <h1>One Flow Stream</h1>
       <TextEditor keywordsList={keywordsList} />
-
 
     </div>
   );

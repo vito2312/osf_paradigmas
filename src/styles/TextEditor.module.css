@@ -1,0 +1,142 @@
+.customTextarea {
+    margin: 5px;
+    width: 300px;    /* Specify your desired width */
+    height: 200px;   /* Specify your desired height */
+    overflow-y: auto; /* Enable vertical scrolling if content overflows */
+    border-radius: 3%;
+}
+
+#TI{
+  background-color: rgb(20, 20, 20);
+  color: aliceblue;
+}
+#TO{
+  background-color: grey;
+  color: rgb(17, 17, 17);
+}
+  .bg-black {
+      background-color: black;
+  }
+  .text-white {
+      color:white;
+  }
+  
+
+  .customContainer{
+    margin-left: 20%; 
+    margin-top: 10%;  
+  }
+  
+  .customButtons{
+    display: flex;
+    margin-left: 1%; 
+    margin-top: 1%;  
+    gap: 10px;
+    
+  }
+  .customButtons button{
+    border-radius: 10rem;
+    border: none;
+    height: 20px;
+    padding-inline: 20px;
+  }
+
+  
+  .button {
+
+    border-radius: 7rem;
+    color: #fff;
+    transition: all .3s;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    text-decoration: none;
+  }
+  
+  .button:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(7, 173, 214); /* Cambiar el color aquí */
+    border-radius: 10rem;
+    z-index: -2;
+  }
+  
+  .button:before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0%;
+    height: 100%;
+    background-color: #09a; /* Cambiar el color aquí */
+    transition: all .3s;
+    border-radius: 10rem;
+    z-index: -1;
+  }
+  
+  .button:hover {
+    color: #fff;
+  }
+  
+  .button:hover:before {
+    width: 100%;
+  }
+  
+
+
+  .buttonSend {
+    padding-inline: 20px;
+    border-radius: 7rem;
+    color: #fff;
+    padding: 3px;
+    transition: all .3s;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    text-decoration: none;
+  }
+  
+  .buttonSend:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(94, 202, 118); /* Cambiar el color aquí */
+    border-radius: 10rem;
+    z-index: -2;
+  }
+  
+  .buttonSend:before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0%;
+    height: 100%;
+    background-color: rgb(3, 92, 40); /* Cambiar el color aquí */
+    transition: all .3s;
+    border-radius: 10rem;
+    z-index: -1;
+  }
+  
+  .buttonSend:hover {
+    color: #fff;
+  }
+  
+  .buttonSend:hover:before {
+    width: 100%;
+  }
+  
+
+  
+
+  
+
+ 
+  
