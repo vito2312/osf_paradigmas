@@ -8,8 +8,11 @@ const scriptsDirectory = path.join(process.cwd(), '/src/scripts');
 
 export default function handler(req, res) {
   if (req.method === 'GET') {
-    const { id } = req.query;
+    const { id } = req.query; // Obtén el scriptId de los parámetros de consulta
+
+    // A continuación, puedes usar el scriptId para cargar el script correspondiente
     const scriptFilePath = path.join(scriptsDirectory, `${id}.txt`);
+    
     try {
       const scriptContent = fs.readFileSync(scriptFilePath, 'utf8');
       res.status(200).send(scriptContent);
@@ -19,6 +22,6 @@ export default function handler(req, res) {
     }
   } else {
     res.status(405).end();
-
   }
 }
+

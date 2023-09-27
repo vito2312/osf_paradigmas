@@ -104,20 +104,21 @@ const TextEditor = () => {
 
   const handleLoadScript = async (scriptId) => {
     try {
-      const response = await fetch(`${API_SERVER_URL}/script/${scriptId}`, {method: 'GET'});
-      
+      const response = await fetch(`${API_SERVER_URL}/script?id=${scriptId}`, { method: 'GET' });
+  
       if (!response.ok) {
         throw new Error('La solicitud no tuvo éxito.');
       }
-
+  
       const scriptContent = await response.text();
-
-      setLoadedScript(scriptContent);
-
+  
+      setInputText(scriptContent); // Establece el contenido del script en el área editable (EA)
+  
     } catch (error) {
       console.error('Error al cargar el script:', error);
     }
   };
+  
   
 
   const handleNewArchive = () =>{
