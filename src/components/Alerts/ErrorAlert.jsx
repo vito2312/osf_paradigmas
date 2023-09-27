@@ -11,7 +11,7 @@ const ErrorAlert = ({ message, onClose }) => {
         const timer = setTimeout(() => {
           setIsVisible(false);
           onClose(); // Cierra la alerta después de ocultarla
-        }, 2000);
+        }, 3000);
   
         // Limpia el temporizador cuando el componente se desmonta
         return () => {

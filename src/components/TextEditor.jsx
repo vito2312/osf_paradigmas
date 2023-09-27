@@ -43,6 +43,28 @@ const TextEditor = ({ keywordsList }) => {
     setFileName(e.target.value);
   };
 
+  const handleError = (evento) => {
+    const isFileNameEmpty = fileName.trim() === '';
+    const isInputTextEmpty = inputText.trim() === '';
+    evento = `Fallo al ${evento}`
+
+    const errorMessage =
+      (isFileNameEmpty && isInputTextEmpty) ?
+      evento + 'Tanto el nombre del archivo como el contenido están vacíos.' :
+      isFileNameEmpty ?
+      evento + 'El nombre del archivo está vacío.' :
+      isInputTextEmpty ?
+      evento + 'El contenido del archivo está vacío.' :
+      null;
+  
+    if (errorMessage) {
+      setAlert({ type: 'error', message: errorMessage });
+      return true;
+    }
+    return false;
+  };
+  
+
   const handleClear = () => {
     const confirmed = window.confirm('Are you sure you want to clear the text?');
     if (confirmed) {
@@ -90,8 +112,11 @@ const TextEditor = ({ keywordsList }) => {
     setOutputText(suggestion);
   };
 
-
   const handleSendToServer = async () => {
+    
+    if(handleError("enviar al servidor. "))
+    return
+    
     try {
       const response = await fetch(`${API_SERVER_URL}/process`, {
         method: 'POST',
@@ -134,10 +159,12 @@ const TextEditor = ({ keywordsList }) => {
   };
 
   const handleLoadScript = async (scriptId) => {
+   
     try {
       const response = await fetch(`${API_SERVER_URL}/script?id=${scriptId}`, { method: 'GET' });
   
       if (!response.ok) {
+        setAlert({ type: 'error', message: `Error. No se encontró el archivo con el nombre ${scriptId}` });
         throw new Error('La solicitud no tuvo éxito.');
       }
   
@@ -156,6 +183,10 @@ const TextEditor = ({ keywordsList }) => {
   };
 
   const handleEvaluateScript = async () => {
+    
+    if(handleError("evaluar el script. "))
+      return
+    
     try {
       const response = await fetch(`${API_SERVER_URL}/eval`, {
         method: 'POST',
@@ -180,18 +211,14 @@ const TextEditor = ({ keywordsList }) => {
     }
   };
   
-
   const handleSaveScript = async () => {
     const partes = fileName.split(".");
     const name = partes[0];
     const extension = partes[partes.length - 1];
 
-    if (fileName.trim() === '' || inputText === '') {
-      // Verifica si el nombre del archivo o el contenido están vacíos
-      setAlert({ type: 'error', message: 'No se pudo guardar el archivo. El nombre del archivo está vacío.' });
+    if(handleError("guardar el script. "))
+    return
 
-      return;
-    }
     try {
       const response = await fetch(`${API_SERVER_URL}/save`, {
         method: 'POST',
@@ -218,7 +245,6 @@ const TextEditor = ({ keywordsList }) => {
 
   };
   
-
   return (
     <div>
         <div className={styles.customButtons}>
@@ -230,7 +256,6 @@ const TextEditor = ({ keywordsList }) => {
         <button className={styles.buttonSend} onClick={handleAboutClick}>ABOUT</button>
         {aboutData && <Dialog data={aboutData} onClose={handleCloseDialog} />}
       </div>
-      
       
       <input
         type="text"
@@ -280,7 +305,6 @@ const TextEditor = ({ keywordsList }) => {
     </div>
   );
 };
-
 
 
 export default TextEditor;
