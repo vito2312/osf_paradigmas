@@ -15,6 +15,7 @@ import ResponseTextArea from '@/components/TextAreas/ResponseTextArea';
 import TranspilateTextArea from '@/components/TextAreas/TranspilateTextArea';
 import Dialog from '@/components/Dialog';
 import KeywordChecker from './KeywordChecker';
+import SuccesAlert from '@/components/Alerts/SuccesAlert';
 import ErrorAlert from '@/components/Alerts/ErrorAlert';
 
 const TextEditor = ({ keywordsList }) => {
@@ -25,7 +26,7 @@ const TextEditor = ({ keywordsList }) => {
   const [fileName, setFileName] = useState(`Untitlde-1`);
   const [suggestions, setSuggestions] = useState([]);
   const [selectedSuggestion, setSelectedSuggestion] = useState('');
-  const [error, setError] = useState(null); 
+  const [alert, setAlert] = useState(null); 
 
   //about
   const [aboutData, setAboutData] = useState(null);
@@ -33,6 +34,10 @@ const TextEditor = ({ keywordsList }) => {
   //textoCargado
   const [loadedScript, setLoadedScript] = useState('');
 
+
+  const handleCloseAlert = () => {
+    setAlert(null);
+  };
 
   const handleFileNameChange = (e) => {
     setFileName(e.target.value);
@@ -177,17 +182,16 @@ const TextEditor = ({ keywordsList }) => {
   
 
   const handleSaveScript = async () => {
-
-    if (fileName.trim() === '' || inputText.trim() === '') {
-      // Verifica si el nombre del archivo o el contenido están vacíos
-      setError('No se pudo guardar el archivo. El nombre del archivo o el contenido están vacíos.');
-      return;
-    }
-
     const partes = fileName.split(".");
     const name = partes[0];
     const extension = partes[partes.length - 1];
 
+    if (fileName.trim() === '' || inputText === '') {
+      // Verifica si el nombre del archivo o el contenido están vacíos
+      setAlert({ type: 'error', message: 'No se pudo guardar el archivo. El nombre del archivo está vacío.' });
+
+      return;
+    }
     try {
       const response = await fetch(`${API_SERVER_URL}/save`, {
         method: 'POST',
@@ -202,7 +206,7 @@ const TextEditor = ({ keywordsList }) => {
       });
   
       if (response.ok) {
-        // El archivo se guardó con éxito
+        setAlert({ type: 'success', message: 'Archivo guardado con éxito.' });
         console.log('Archivo guardado exitosamente.');
       } else {
         console.error('Error al guardar el archivo.');
@@ -269,7 +273,8 @@ const TextEditor = ({ keywordsList }) => {
       </div>
       
        {/* Mostrar la alerta de error si hay un error */}
-       {error && <ErrorAlert message={error} onClose={handleCloseError} />}
+       {alert && alert.type === 'error' && <ErrorAlert message={alert.message} onClose={handleCloseAlert} />}
+       {alert && alert.type === 'success' && <SuccesAlert message={alert.message} onClose={handleCloseAlert} />}
 
       <KeywordChecker text={inputText} />
     </div>

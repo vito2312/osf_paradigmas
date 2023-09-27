@@ -1,7 +1,7 @@
-import React, { useEffect , useState } from 'react';
-import styles from '../../styles/ErrorAlert.module.css'; // Importa los estilos CSS módulo
+import React, {  useEffect,useState } from 'react';
+import styles from '../../styles/SuccesAlert.module.css'; // Importa los estilos CSS módulo
 
-const ErrorAlert = ({ message, onClose }) => {
+const SuccessAlert = ({ message, onClose }) => {
     const [isVisible, setIsVisible] = useState(false);
   
     useEffect(() => {
@@ -21,10 +21,17 @@ const ErrorAlert = ({ message, onClose }) => {
     }, [message, onClose]); // Agrega onClose como una dependencia
   
     return (
-      <div className={`${styles.errorAlert} ${isVisible ? styles.active : ''}`}>
+      <div className={`${styles.succesAlert} ${isVisible ? styles.active : ''}`}>
         <p>{message}</p>
       </div>
     );
   };
   
-  export default ErrorAlert;
+  export default SuccessAlert;
+  
+  
+  
+  
+  
+  
+  

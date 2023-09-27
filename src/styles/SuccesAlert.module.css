@@ -1,0 +1,30 @@
+/* ErrorAlert.css */
+
+.succesAlert {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #78f16f; /* Fondo rojo */
+    color: #ffffff; /* Texto blanco */
+    padding: 10px;
+    text-align: center;
+    transform: translateY(-100%); /* Inicialmente, oculto arriba */
+    transition: transform 0.3s ease-in-out; /* Agrega una transición suave */
+  }
+  
+  .succesAlert.active {
+    transform: translateY(0); /* Mostrar desde arriba */
+  }
+  
+  .succesAlert p {
+    margin: 0;
+  }
+  
+  .succesAlert button {
+    background-color: transparent;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+  }
+  
