@@ -21,15 +21,18 @@ const TextEditor = () => {
   const [outputText, setOutputText] = useState('');
   const [response, setResponse] = useState('');
 
-
   const [aboutData, setAboutData] = useState(null);
  
+
+  const [loadedScript, setLoadedScript] = useState('');
+
+
   const handleClear = () => {
     const confirmed = window.confirm('Are you sure you want to clear the text?');
     if (confirmed) {
       setInputText('');
       setOutputText('');
-      
+      setLoadedScript(''); 
     }
   };
 
@@ -87,26 +90,50 @@ const TextEditor = () => {
     setAboutData(null);
   };
 
+
+  const handleLoadScript = async (scriptId) => {
+    try {
+      const response = await fetch(`${API_SERVER_URL}/script?=${scriptId}`, {
+        method: 'POST', // Asegúrate de que la solicitud sea POST
+      });
+
+      if (!response.ok) {
+        throw new Error('La solicitud no tuvo éxito.');
+      }
+
+      const scriptContent = await response.text();
+
+      // Establece el contenido del script cargado en el área de edición (EA)
+      setLoadedScript(scriptContent);
+    } catch (error) {
+      console.error('Error al cargar el script:', error);
+    }
+  };
+
   return (
     <div>
       <div className={styles.customContainer}>
         {/* AREA EDITABLE (EA) */}
         <div className={styles.lineNumbers}>{renderLineNumbers(inputText)}</div>
-        <EditableTextArea value={inputText} onChange={handleInputChange} />
+        <EditableTextArea value={ loadedScript || inputText} onChange={handleInputChange} />
 
         {/* AREA DE SALIDA (TA) */}
         <div className={styles.lineNumbers}>{renderLineNumbers(inputText)}</div>
         <TranspilateTextArea value={outputText} />
 
-        {/* AREA DE RESPUESTA (RA) */}
-        <ResponseTextArea value={response} />
+       
       </div>
-
+      
+      <div className={styles.compile_area}>
+         {/* AREA DE RESPUESTA (RA) */}
+         <ResponseTextArea value={response} />
+      </div>
 
       <div className={styles.customButtons}>
         <button className={styles.button} onClick={handleClear}>Clear All</button>
         <button className={styles.buttonSend} onClick={handleSendToServer}>Send to Server</button>
         <button className={styles.buttonSend} onClick={handleSendToServer}>Guardar Script</button>
+        <button className={styles.buttonSend} onClick={() => handleLoadScript('script1')}>Recuperar Script</button>
         <button className={styles.buttonSend} onClick={handleAboutClick}>ABOUT</button>
         {aboutData && <Dialog data={aboutData} onClose={handleCloseDialog} />}
       </div>

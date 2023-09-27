@@ -1,19 +1,22 @@
 .customTextarea {
 
-    width: 800px;    /* Specify your desired width */
-    height: 300px;   /* Specify your desired height */
-    overflow-y: auto; /* Enable vertical scrolling if content overflows */
-    border-radius: 3%;
+    width: 1000px;    
+    height: 300px;   
+    overflow-y: auto; 
+
+   
 }
 
 #TI{
-  background-color: rgb(20, 20, 20);
+  background-color: rgb(252, 252, 252);
   color: aliceblue;
   margin-right: 4px;
+  resize: none;
 }
 #TO{
   background-color: grey;
   color: rgb(17, 17, 17);
+  resize: none;
 }
   .bg-black {
       background-color: black;
@@ -150,12 +153,22 @@
     font-size: 14px;
     color: #e0d5d5;
     line-height: 20px;
-    width: 30px;
+    width: 17px;
     height: 300px;
-    overflow-y: scroll;
+    overflow-y: none;
+
+
   }
 
-  
+  .compile_area{
+
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+
+  }
 
   
 
