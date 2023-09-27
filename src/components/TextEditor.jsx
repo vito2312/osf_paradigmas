@@ -104,20 +104,21 @@ const TextEditor = () => {
 
   const handleLoadScript = async (scriptId) => {
     try {
-      const response = await fetch(`${API_SERVER_URL}/script/${scriptId}`, {method: 'GET'});
-      
+      const response = await fetch(`${API_SERVER_URL}/script?id=${scriptId}`, { method: 'GET' });
+  
       if (!response.ok) {
         throw new Error('La solicitud no tuvo éxito.');
       }
-
+  
       const scriptContent = await response.text();
-
-      setLoadedScript(scriptContent);
-
+  
+      setInputText(scriptContent); // Establece el contenido del script en el área editable (EA)
+  
     } catch (error) {
       console.error('Error al cargar el script:', error);
     }
   };
+  
   
 
   const handleNewArchive = () =>{
@@ -166,12 +167,12 @@ const TextEditor = () => {
         <button className={styles.button} onClick={handleClear}>Clear All</button>
         <button className={styles.buttonSend} onClick={handleSendToServer}>Send to Server</button>
         <button className={styles.buttonSend} onClick={handleSaveScript}>Guardar Script</button>
-        <button className={styles.buttonSend} onClick={() => handleLoadScript("script1")}>Recuperar Script</button>
+        <button className={styles.buttonSend} onClick={() => handleLoadScript(fileName)}>Recuperar Script</button>
         <button className={styles.buttonSend} onClick={handleAboutClick}>ABOUT</button>
         {aboutData && <Dialog data={aboutData} onClose={handleCloseDialog} />}
       </div>
       
-     
+      
       <input
         type="text"
         placeholder="Nombre del archivo"
@@ -190,16 +191,12 @@ const TextEditor = () => {
         <div className={styles.lineNumbers}>{renderLineNumbers(inputText)}</div>
         <TranspilateTextArea value={outputText} />
 
-       
       </div>
       
-
       <div className={styles.compile_area}>
          {/* AREA DE RESPUESTA (RA) */}
          <ResponseTextArea value={response} />
       </div>
-
-      
 
     </div>
   );
