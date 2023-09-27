@@ -188,12 +188,13 @@
 
 .suggestions_container {
   margin-right: 10px;
-  background-color: gray; /* Color de fondo gris */
+  background-color: rgb(202, 187, 153); /* Color de fondo gris */
 }
 
 /* Estilo para cada sugerencia */
 .suggestion_item {
   cursor: pointer;
+  color: black;
   padding: 5px;
   transition: background-color 0.2s, color 0.2s;
 }
