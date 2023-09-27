@@ -185,6 +185,25 @@
 
   }
 
+
+.suggestions_container {
+  margin-right: 10px;
+  background-color: gray; /* Color de fondo gris */
+}
+
+/* Estilo para cada sugerencia */
+.suggestion_item {
+  cursor: pointer;
+  padding: 5px;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+/* Estilo para la sugerencia seleccionada */
+.suggestion_item:hover {
+  background-color: #fff;
+  color: rgb(15, 8, 228); /* Color del texto blanco cuando se selecciona */
+}
+
   
 
  

@@ -14,13 +14,15 @@ import EditableTextArea from '@/components/TextAreas/EditableTextArea';
 import ResponseTextArea from '@/components/TextAreas/ResponseTextArea';
 import TranspilateTextArea from '@/components/TextAreas/TranspilateTextArea';
 import Dialog from '@/components/Dialog';
+import KeywordChecker from './KeywordChecker';
 
-
-const TextEditor = () => {
+const TextEditor = ({ keywordsList }) => {
   const [inputText, setInputText] = useState('');
   const [outputText, setOutputText] = useState('');
   const [response, setResponse] = useState('');
   const [fileName, setFileName] = useState(`Untitlde-1`);
+  const [suggestions, setSuggestions] = useState([]);
+  const [selectedSuggestion, setSelectedSuggestion] = useState('');
   //about
   const [aboutData, setAboutData] = useState(null);
  
@@ -39,6 +41,8 @@ const TextEditor = () => {
       setOutputText('');
       setLoadedScript(''); 
       setResponse('');
+      setSelectedSuggestion('');
+      setSuggestions([]);
     }
   };
 
@@ -46,14 +50,35 @@ const TextEditor = () => {
     const newText = e.target.value;
     setInputText(newText);
 
-    /*
+    
     const words = newText.split(/\s+/);
 
     const processedWords = words
       .map((word) => word.trim())
       .filter((trimmedWord) => keywordsList.includes(trimmedWord));
-  */
+    
+      const matchingSuggestions = keywordsList.filter((keyword) =>
+      keyword.toLowerCase().includes(newText.toLowerCase())
+    );  
+  
+     setSuggestions(newText.trim() ? matchingSuggestions : []);
+  
+     const processedText = processedWords.join(' ');
+  
+    // Actualizar el outputText según el valor actual del inputText
+     setOutputText(processedText);
+
+     
  
+  };
+
+  const handleSuggestionSelected = (suggestion) => {
+    setInputText(suggestion);
+    setSelectedSuggestion(suggestion);
+    setSuggestions([]); // Ocultar sugerencias al seleccionar una
+  
+    // Actualizar el outputText cuando se selecciona una sugerencia
+    setOutputText(suggestion);
   };
 
 
@@ -75,8 +100,8 @@ const TextEditor = () => {
   
       // Formatear la respuesta JSON como una cadena legible
       const formattedResponse = JSON.stringify(responseData, null, 2);
-  
-      setOutputText(`${formattedResponse}`);
+      setOutputText(setSelectedSuggestion(`${formattedResponse}`));
+
     } catch (error) {
       console.error('Error sending data to server:', error);
     }
@@ -206,10 +231,25 @@ const TextEditor = () => {
         {/* AREA EDITABLE (EA) */}
         <div className={styles.lineNumbers}>{renderLineNumbers(inputText)}</div>
         <EditableTextArea value={ loadedScript || inputText} onChange={handleInputChange} />
+       
+        {suggestions.length > 0 && (
+                <div className={styles.suggestions_container}>
+                  {suggestions.map((suggestion) => (
+                    <div
+                      key={suggestion}
+                      className={styles.suggestion_item}
+                      onClick={() => handleSuggestionSelected(suggestion)}
+                    >
+                      {suggestion}
+                    </div>
+                  ))}
+                </div>
+        )}
+
 
         {/* AREA DE SALIDA (TA) */}
         <div className={styles.lineNumbers}>{renderLineNumbers(inputText)}</div>
-        <TranspilateTextArea value={outputText} />
+        <TranspilateTextArea value={ selectedSuggestion || outputText} />
 
       </div>
       
@@ -217,7 +257,8 @@ const TextEditor = () => {
          {/* AREA DE RESPUESTA (RA) */}
          <ResponseTextArea value={response} />
       </div>
-
+      
+      <KeywordChecker text={inputText} />
     </div>
   );
 };
