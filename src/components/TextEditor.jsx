@@ -15,14 +15,18 @@ import ResponseTextArea from '@/components/TextAreas/ResponseTextArea';
 import TranspilateTextArea from '@/components/TextAreas/TranspilateTextArea';
 import Dialog from '@/components/Dialog';
 import KeywordChecker from './KeywordChecker';
+import ErrorAlert from '@/components/Alerts/ErrorAlert';
 
 const TextEditor = ({ keywordsList }) => {
+
   const [inputText, setInputText] = useState('');
   const [outputText, setOutputText] = useState('');
   const [response, setResponse] = useState('');
   const [fileName, setFileName] = useState(`Untitlde-1`);
   const [suggestions, setSuggestions] = useState([]);
   const [selectedSuggestion, setSelectedSuggestion] = useState('');
+  const [error, setError] = useState(null); 
+
   //about
   const [aboutData, setAboutData] = useState(null);
  
@@ -174,6 +178,12 @@ const TextEditor = ({ keywordsList }) => {
 
   const handleSaveScript = async () => {
 
+    if (fileName.trim() === '' || inputText.trim() === '') {
+      // Verifica si el nombre del archivo o el contenido están vacíos
+      setError('No se pudo guardar el archivo. El nombre del archivo o el contenido están vacíos.');
+      return;
+    }
+
     const partes = fileName.split(".");
     const name = partes[0];
     const extension = partes[partes.length - 1];
@@ -198,7 +208,7 @@ const TextEditor = ({ keywordsList }) => {
         console.error('Error al guardar el archivo.');
       }
     } catch (error) {
-      console.error('Error al enviar la solicitud:', error);
+        console.error('Error al enviar la solicitud:', error);
     }
 
 
@@ -258,6 +268,9 @@ const TextEditor = ({ keywordsList }) => {
          <ResponseTextArea value={response} />
       </div>
       
+       {/* Mostrar la alerta de error si hay un error */}
+       {error && <ErrorAlert message={error} onClose={handleCloseError} />}
+
       <KeywordChecker text={inputText} />
     </div>
   );
