@@ -30,7 +30,6 @@ const TextEditor = ({ keywordsList }) => {
   const [loadedScript, setLoadedScript] = useState('');
 
 
-
   const handleFileNameChange = (e) => {
     setFileName(e.target.value);
   };
@@ -41,6 +40,7 @@ const TextEditor = ({ keywordsList }) => {
       setInputText('');
       setOutputText('');
       setLoadedScript(''); 
+      setResponse('');
       setSelectedSuggestion('');
       setSuggestions([]);
     }
@@ -107,7 +107,6 @@ const TextEditor = ({ keywordsList }) => {
     }
   };
   
-
   const handleAboutClick = async () => {
     try {
       const response = await fetch(`${API_SERVER_URL}/about`);
@@ -124,7 +123,6 @@ const TextEditor = ({ keywordsList }) => {
   const handleCloseDialog = () => {
     setAboutData(null);
   };
-
 
   const handleLoadScript = async (scriptId) => {
     try {
@@ -143,16 +141,38 @@ const TextEditor = ({ keywordsList }) => {
     }
   };
   
-  
-
   const handleNewArchive = () =>{
     setFileName('Untitlde-1');
     setInputText('');
   };
 
+  const handleEvaluateScript = async () => {
+    try {
+      const response = await fetch(`${API_SERVER_URL}/eval`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ script: inputText }), // Envía el contenido del script para evaluación
+      });
+  
+      if (!response.ok) {
+        throw new Error('La solicitud de evaluación no tuvo éxito.');
+      }
+  
+      const result = await response.json();
+    
+    // Extrae el contenido del archivo "ra_fake.txt"
+      const content = result.result;
+      setResponse(result.result); // Establece el resultado de la evaluación en el área de respuesta (RA)
+  
+    } catch (error) {
+      console.error('Error al enviar el script para evaluación:', error);
+    }
+  };
+  
+
   const handleSaveScript = async () => {
-
-
 
     const partes = fileName.split(".");
     const name = partes[0];
@@ -191,6 +211,7 @@ const TextEditor = ({ keywordsList }) => {
         <button className={styles.button} onClick={handleClear}>Clear All</button>
         <button className={styles.buttonSend} onClick={handleSendToServer}>Send to Server</button>
         <button className={styles.buttonSend} onClick={handleSaveScript}>Guardar Script</button>
+        <button className={styles.buttonSend} onClick={handleEvaluateScript}>Evaluar</button>
         <button className={styles.buttonSend} onClick={() => handleLoadScript(fileName)}>Recuperar Script</button>
         <button className={styles.buttonSend} onClick={handleAboutClick}>ABOUT</button>
         {aboutData && <Dialog data={aboutData} onClose={handleCloseDialog} />}
