@@ -8,10 +8,6 @@ const links = [
     route: '/',
   },
   {
-    label: 'About',
-    route: '/AboutUs',
-  },
-  {
     label: 'Nuestros Productos',
     route: '/Products',
   },
