@@ -3,7 +3,7 @@ import styles from '../../styles/TextEditor.module.css'
 const ResponseTextArea = ({ value }) => {
   return (
     <textarea
-      id={styles.TI}
+      id={styles.TA}
       value={value}
       readOnly
       rows={10}

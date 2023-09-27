@@ -20,12 +20,18 @@ const TextEditor = () => {
   const [inputText, setInputText] = useState('');
   const [outputText, setOutputText] = useState('');
   const [response, setResponse] = useState('');
-
+  const [fileName, setFileName] = useState(`Untitlde-1`);
+  //about
   const [aboutData, setAboutData] = useState(null);
  
-
+  //textoCargado
   const [loadedScript, setLoadedScript] = useState('');
 
+
+
+  const handleFileNameChange = (e) => {
+    setFileName(e.target.value);
+  };
 
   const handleClear = () => {
     const confirmed = window.confirm('Are you sure you want to clear the text?');
@@ -60,18 +66,23 @@ const TextEditor = () => {
         },
         body: JSON.stringify({ text: inputText }),
       });
-
+  
       if (!response.ok) {
         throw new Error('La solicitud no tuvo éxito.');
       }
-
-      const data = await response.json();
-      setOutputText(data.result);
+  
+      const responseData = await response.json();
+      const timestampedText = responseData.result;
+  
+      // Formatear la respuesta JSON como una cadena legible
+      const formattedResponse = JSON.stringify(responseData, null, 2);
+  
+      setOutputText(`${formattedResponse}`);
     } catch (error) {
       console.error('Error sending data to server:', error);
     }
   };
-
+  
 
   const handleAboutClick = async () => {
     try {
@@ -93,26 +104,84 @@ const TextEditor = () => {
 
   const handleLoadScript = async (scriptId) => {
     try {
-      const response = await fetch(`${API_SERVER_URL}/script?=${scriptId}`, {
-        method: 'POST', // Asegúrate de que la solicitud sea POST
-      });
-
+      const response = await fetch(`${API_SERVER_URL}/script/${scriptId}`, {method: 'GET'});
+      
       if (!response.ok) {
         throw new Error('La solicitud no tuvo éxito.');
       }
 
       const scriptContent = await response.text();
 
-      // Establece el contenido del script cargado en el área de edición (EA)
       setLoadedScript(scriptContent);
+
     } catch (error) {
       console.error('Error al cargar el script:', error);
     }
   };
+  
+
+  const handleNewArchive = () =>{
+    setFileName('Untitlde-1');
+    setInputText('');
+  };
+
+  const handleSaveScript = async () => {
+
+
+
+    const partes = fileName.split(".");
+    const name = partes[0];
+    const extension = partes[partes.length - 1];
+
+    try {
+      const response = await fetch(`${API_SERVER_URL}/save`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json', // Cambia el tipo de contenido a JSON
+        },
+        body: JSON.stringify({
+          extension,
+          fileName : name, // Agrega el nombre personalizado al cuerpo de la solicitud
+          scriptContent: inputText, // Agrega el contenido del script
+        }),
+      });
+  
+      if (response.ok) {
+        // El archivo se guardó con éxito
+        console.log('Archivo guardado exitosamente.');
+      } else {
+        console.error('Error al guardar el archivo.');
+      }
+    } catch (error) {
+      console.error('Error al enviar la solicitud:', error);
+    }
+
+
+  };
+  
 
   return (
     <div>
+        <div className={styles.customButtons}>
+        <button className={styles.button} onClick={handleClear}>Clear All</button>
+        <button className={styles.buttonSend} onClick={handleSendToServer}>Send to Server</button>
+        <button className={styles.buttonSend} onClick={handleSaveScript}>Guardar Script</button>
+        <button className={styles.buttonSend} onClick={() => handleLoadScript("script1")}>Recuperar Script</button>
+        <button className={styles.buttonSend} onClick={handleAboutClick}>ABOUT</button>
+        {aboutData && <Dialog data={aboutData} onClose={handleCloseDialog} />}
+      </div>
+      
+     
+      <input
+        type="text"
+        placeholder="Nombre del archivo"
+        value={fileName}
+        onChange={handleFileNameChange}
+      />
+      <button className={styles.buttonSend} onClick={handleNewArchive}>Nuevo Archivo</button>
+
       <div className={styles.customContainer}>
+
         {/* AREA EDITABLE (EA) */}
         <div className={styles.lineNumbers}>{renderLineNumbers(inputText)}</div>
         <EditableTextArea value={ loadedScript || inputText} onChange={handleInputChange} />
@@ -124,19 +193,13 @@ const TextEditor = () => {
        
       </div>
       
+
       <div className={styles.compile_area}>
          {/* AREA DE RESPUESTA (RA) */}
          <ResponseTextArea value={response} />
       </div>
 
-      <div className={styles.customButtons}>
-        <button className={styles.button} onClick={handleClear}>Clear All</button>
-        <button className={styles.buttonSend} onClick={handleSendToServer}>Send to Server</button>
-        <button className={styles.buttonSend} onClick={handleSendToServer}>Guardar Script</button>
-        <button className={styles.buttonSend} onClick={() => handleLoadScript('script1')}>Recuperar Script</button>
-        <button className={styles.buttonSend} onClick={handleAboutClick}>ABOUT</button>
-        {aboutData && <Dialog data={aboutData} onClose={handleCloseDialog} />}
-      </div>
+      
 
     </div>
   );
