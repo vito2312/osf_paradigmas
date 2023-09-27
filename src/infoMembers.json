@@ -1,10 +1,10 @@
 {
     "teamMembers": ["Alvaro Bonilla Ugalde", "Fransico Fuentes Gonzalez", "Eduardo Orellana Rivas", "Lesly Vargas Quesada"],
-    "course": "Curso XYZ",
-    "project": "Proyecto ABC",
-    "semester": "Semestre 1",
+    "course": "Curso: EIF_400 Paradigmas de Programacion",
+    "project": "One Flow Stream",
+    "semester": "II CICLO",
     "year": 2023,
-    "school": "Escuela XYZ",
-    "university": "Universidad ABC"
+    "school": "Escuela de informatica",
+    "university": "Universidad Nacional de Costa Rica"
   }
   

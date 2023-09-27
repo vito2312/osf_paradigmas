@@ -87,8 +87,6 @@ const TextEditor = () => {
     setAboutData(null);
   };
 
-
-
   return (
     <div>
       <div className={styles.customContainer}>
