@@ -184,6 +184,8 @@ const TextEditor = ({ keywordsList }) => {
 
   const handleEvaluateScript = async () => {
     
+    handleSendToServer()
+
     if(handleError("evaluar el script. "))
       return
     
